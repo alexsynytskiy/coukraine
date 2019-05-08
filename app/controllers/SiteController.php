@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\components\NewsHelper;
 use yii\easyii\components\helpers\CategoryHelper;
 use yii\easyii\components\helpers\LanguageHelper;
 use yii\easyii\modules\gallery\api\Gallery;
@@ -18,41 +19,6 @@ class SiteController extends Controller
                 'class' => 'yii\web\ErrorAction',
             ],
         ];
-    }
-
-    /**
-     * @param     $category
-     * @param int $limit
-     *
-     * @return array|null
-     */
-    public function getNewsList($category = [
-        CategoryHelper::CATEGORY_HEALTH,
-        CategoryHelper::CATEGORY_CULTURE,
-        CategoryHelper::CATEGORY_EDUCATION], $limit = 9)
-    {
-        $news = null;
-
-        if (\Yii::$app->language !== LanguageHelper::LANG_UA) {
-            $news = News::items([
-                'limit' => $limit,
-                'language' => 'en',
-                'tags' => \Yii::$app->request->get('tag'),
-                'where' => [
-                    'category' => $category,
-                ],
-            ]);
-        } else {
-            $news = News::items([
-                'limit' => $limit,
-                'tags' => \Yii::$app->request->get('tag'),
-                'where' => [
-                    'category' => $category,
-                ],
-            ]);
-        }
-
-        return $news;
     }
 
     public function actionIndex()
@@ -95,8 +61,21 @@ class SiteController extends Controller
         $projectEducation = Gallery::cat('projects-education');
         $projects = array_merge($projects, $projectEducation->photos(['limit' => 2]));
 
+        $news = NewsHelper::prepareNews();
+        $hasToLoadMore = false;
+        $lastItemId = 0;
+
+        if (count($news) > News::ITEMS_PER_PAGE) {
+            $hasToLoadMore = true;
+
+            array_pop($news);
+            $lastItemId = $news[count($news) - 1]->id;
+        }
+
         return $this->render('index', [
-            'news' => $this->getNewsList(),
+            'news' => $news,
+            'hasToLoadMore' => $hasToLoadMore,
+            'lastItemId' => $lastItemId,
             'mainSlider' => $slides,
             'ourDirections' => $ourDirections,
             'photosProjects' => $projects,
@@ -112,9 +91,24 @@ class SiteController extends Controller
         $project = Gallery::cat('projects-health');
         $photos = $project->photos(['limit' => 3]);
 
-        return $this->render('health', ['news' => $this->getNewsList([
-            CategoryHelper::CATEGORY_HEALTH
-        ]),
+        $news = NewsHelper::prepareNews(
+            '',
+            [CategoryHelper::CATEGORY_HEALTH]
+        );
+        $hasToLoadMore = false;
+        $lastItemId = 0;
+
+        if (count($news) > News::ITEMS_PER_PAGE) {
+            $hasToLoadMore = true;
+
+            array_pop($news);
+            $lastItemId = $news[count($news) - 1]->id;
+        }
+
+        return $this->render('health', [
+            'news' => $news,
+            'hasToLoadMore' => $hasToLoadMore,
+            'lastItemId' => $lastItemId,
             'photosProjects' => $photos,
         ]);
     }
@@ -128,9 +122,24 @@ class SiteController extends Controller
         $project = Gallery::cat('projects-culture');
         $photos = $project->photos(['limit' => 3]);
 
-        return $this->render('culture', ['news' => $this->getNewsList([
-            CategoryHelper::CATEGORY_CULTURE
-        ]),
+        $news = NewsHelper::prepareNews(
+            '',
+            [CategoryHelper::CATEGORY_CULTURE]
+        );
+        $hasToLoadMore = false;
+        $lastItemId = 0;
+
+        if (count($news) > News::ITEMS_PER_PAGE) {
+            $hasToLoadMore = true;
+
+            array_pop($news);
+            $lastItemId = $news[count($news) - 1]->id;
+        }
+
+        return $this->render('culture', [
+            'news' => $news,
+            'hasToLoadMore' => $hasToLoadMore,
+            'lastItemId' => $lastItemId,
             'photosProjects' => $photos,
         ]);
     }
@@ -144,9 +153,24 @@ class SiteController extends Controller
         $project = Gallery::cat('projects-education');
         $photos = $project->photos(['limit' => 3]);
 
-        return $this->render('education', ['news' => $this->getNewsList([
-            CategoryHelper::CATEGORY_EDUCATION
-        ]),
+        $news = NewsHelper::prepareNews(
+            '',
+            [CategoryHelper::CATEGORY_EDUCATION]
+        );
+        $hasToLoadMore = false;
+        $lastItemId = 0;
+
+        if (count($news) > News::ITEMS_PER_PAGE) {
+            $hasToLoadMore = true;
+
+            array_pop($news);
+            $lastItemId = $news[count($news) - 1]->id;
+        }
+
+        return $this->render('education', [
+            'news' => $news,
+            'hasToLoadMore' => $hasToLoadMore,
+            'lastItemId' => $lastItemId,
             'photosProjects' => $photos,
         ]);
     }

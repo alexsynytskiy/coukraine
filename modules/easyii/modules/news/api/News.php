@@ -24,6 +24,8 @@ use yii\easyii\modules\news\models\News as NewsModel;
 
 class News extends \yii\easyii\components\API
 {
+    const ITEMS_PER_PAGE = 10;
+
     private $_adp;
     private $_last;
     private $_items;
@@ -41,7 +43,9 @@ class News extends \yii\easyii\components\API
             $query = NewsModel::find()->with($with)->andWhere(['status' => NewsModel::STATUS_ON]);
 
             if(!empty($options['where'])) {
-                $query->andFilterWhere($options['where']);
+                foreach ($options['where'] as $param) {
+                    $query->andFilterWhere($param);
+                }
             }
             if(!empty($options['tags'])){
                 $query

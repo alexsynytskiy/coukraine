@@ -5,6 +5,8 @@
 /* @var $mainSlider yii\easyii\modules\page\api\PageObject[] */
 /* @var $ourDirections yii\easyii\modules\page\api\PageObject */
 /* @var $photosProjects yii\easyii\modules\gallery\api\PhotoObject[] */
+/* @var bool $hasToLoadMore */
+/* @var int $lastItemId */
 
 $asset = \app\assets\AppAsset::register($this);
 ?>
@@ -54,9 +56,32 @@ $asset = \app\assets\AppAsset::register($this);
                 <h1>Новини</h1>
                 <p>Слідкуйте за нашою діяльністю:</p>
             </div>
-            <?php foreach ($news as $item): ?>
-                <?= $this->render('news-item', ['item' => $item]) ?>
-            <?php endforeach; ?>
+
+            <?php if(count($news)): ?>
+                <div id="news-list">
+                    <?php foreach ($news as $item): ?>
+                        <?= $this->render('news-item', ['item' => $item]) ?>
+                    <?php endforeach; ?>
+                </div>
+
+                <?php if ($hasToLoadMore): ?>
+                    <div class="clearfix"></div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <a href="#"
+                               id="load-more-news"
+                               class="button"
+                               data-last-id="<?= $lastItemId ?>">Більше новин</a>
+                        </div>
+                    </div>
+                <?php endif; ?>
+            <?php else: ?>
+                <div class="panel-footer">
+                    <div class="heading-elements">
+                        <span class="heading-text text-semibold">Новин поки немає</span>
+                    </div>
+                </div>
+            <?php endif; ?>
         </div>
     </div>
 </section>
@@ -84,8 +109,10 @@ $asset = \app\assets\AppAsset::register($this);
     </div>
 </section>
 
-<!-- Here projects block must be
+<?php
+$pageOptions = \yii\helpers\Json::encode([
+    'loadMoreUrl' => '/news/load-more/',
+]);
 
-<section class="padding cta style-three dark wow zoomIn" style="padding-bottom: 0;"></section>
-
--->
+$this->registerJs('NewsPage(' . $pageOptions . ')');
+?>

@@ -1,5 +1,6 @@
 <?php
 namespace app\assets;
+
 class AppAsset extends \yii\web\AssetBundle
 {
     /**
@@ -8,6 +9,7 @@ class AppAsset extends \yii\web\AssetBundle
     protected static $pathToImages;
 
     public $sourcePath = '@app/media';
+
     public $css = [
         'css/bootstrap.min.css',
         'style.css',
@@ -24,7 +26,6 @@ class AppAsset extends \yii\web\AssetBundle
         'plugins/pnotify/pnotify.min.css',
         'css/custom.css?version=6',
     ];
-
 
     public $js = [
         'js/jquery.min.js',
@@ -45,6 +46,8 @@ class AppAsset extends \yii\web\AssetBundle
         'plugins/isotope-portfolio/js/isotope-main.js',
         'plugins/isotope-portfolio/js/jquery.fancybox.pack.js',
         'plugins/pnotify/pnotify.min.js',
+        'js/SiteCore.js?version=2',
+        'js/NewsPage.js',
         'js/main.js',
     ];
 

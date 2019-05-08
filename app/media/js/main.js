@@ -1,17 +1,3 @@
-/*
-| ----------------------------------------------------------------------------------
-| TABLE OF CONTENT
-| ----------------------------------------------------------------------------------
--Revolution Slider
--Unit Gallery
--Skills
--Progress Bar Percentage
--Search Popup
--Smooth Scrolling
--Parallax
--Lightbox
--Wow
-*/
 $(document).ready(function() {
 	'use strict';
 
