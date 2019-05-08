@@ -76,7 +76,7 @@ $asset = \app\assets\AppAsset::register($this);
                     </div>
                 <?php endif; ?>
             <?php else: ?>
-                <div class="panel-footer">
+                <div class="no-news">
                     <div class="heading-elements">
                         <span class="heading-text text-semibold">Новин поки немає</span>
                     </div>

@@ -2,34 +2,20 @@
 
 /* @var $this yii\web\View */
 /* @var $news yii\easyii\modules\news\api\NewsObject[] */
-/* @var $photosProjects yii\easyii\modules\gallery\api\PhotoObject[] */
 /* @var bool $hasToLoadMore */
 /* @var int $lastItemId */
 
 $asset = \app\assets\AppAsset::register($this);
+\app\assets\LazyLoadAsset::register($this);
 ?>
 
-<section  style="padding-top: 120px;"></section>
+<section style="padding-top: 120px;"></section>
 
-<section class="health themegradient health-themegradient" id="partners">
-    <div class="container">
-        <div class="row text-center wow fadeInDown">
-            <ul class="logos col-lg-12">
-                <?php foreach ($photosProjects as $project): ?>
-                    <?= $this->render('project-item', ['project' => $project]) ?>
-                <?php endforeach; ?>
-                <div class="clearfix"></div>
-            </ul>
-        </div>
-    </div>
-</section>
-
-<section class="health-news">
+<section class="culture-news">
     <div class="container">
         <div class="row">
             <div class="section-title wow zoomIn">
                 <h1>Новини</h1>
-                <p>Наші новини за напрямом здоров'я:</p>
             </div>
             <?php if(count($news)): ?>
                 <div id="news-list">
@@ -44,7 +30,7 @@ $asset = \app\assets\AppAsset::register($this);
                         <div class="col-lg-12">
                             <a href="#"
                                id="load-more-news"
-                               class="button health"
+                               class="button hype"
                                data-last-id="<?= $lastItemId ?>">Більше новин</a>
                         </div>
                     </div>
@@ -63,7 +49,7 @@ $asset = \app\assets\AppAsset::register($this);
 <?php
 $pageOptions = \yii\helpers\Json::encode([
     'loadMoreUrl' => '/news/load-more/',
-    'category' => \yii\easyii\components\helpers\CategoryHelper::CATEGORY_HEALTH
+    'category' => \yii\easyii\components\helpers\CategoryHelper::CATEGORY_HYPE
 ]);
 
 $this->registerJs('NewsPage(' . $pageOptions . ')');

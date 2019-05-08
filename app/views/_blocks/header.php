@@ -11,23 +11,27 @@ $health    = '';
 $education = '';
 $culture   = '';
 $contacts  = '';
+$hype  = '';
 $team  = '';
 
 switch($currentPage) {
     case 'team':
-        $team = "active";
+        $team = 'active';
         break;
     case 'health':
-        $health = "active";
+        $health = 'active';
         break;
     case 'education':
-        $education = "active";
+        $education = 'active';
         break;
     case 'culture':
-        $culture = "active";
+        $culture = 'active';
+        break;
+    case 'hype':
+        $hype = 'active';
         break;
     case 'index':
-        $contacts = ($controller == 'contact') ? "active" : '';
+        $contacts = $controller === 'contact' ? 'active' : '';
         break;
 }
 ?>
@@ -48,7 +52,7 @@ switch($currentPage) {
         <div class="navbar-collapse collapse navbar-right" id="navbar">
             <ul class="nav navbar-nav">
                 <li>
-                    <?php if($controller == 'site' && $currentPage == 'index'): ?>
+                    <?php if($controller === 'site' && $currentPage === 'index'): ?>
                         <a href="/" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                             Головна <span class="caret"></span>
                         </a>
@@ -88,7 +92,12 @@ switch($currentPage) {
                         <span class="underline"></span>
                     </a>
                 </li>
-                
+                <li>
+                    <a class="<?= $hype ?>" href="<?= Url::to(['/hype']) ?>">
+                        Освітній хайп
+                        <span class="underline"></span>
+                    </a>
+                </li>
                 <li>
                     <a class="<?= $contacts ?>" href="<?= Url::to(['/contact']) ?>">
                         Контакти

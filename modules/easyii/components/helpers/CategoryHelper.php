@@ -1,9 +1,6 @@
 <?php
-namespace yii\easyii\components\helpers;
 
-use acp\components\AcpMsg;
-use acp\components\ActiveRecord;
-use yii\base\Model;
+namespace yii\easyii\components\helpers;
 
 /**
  * Class CategoryHelper
@@ -14,18 +11,21 @@ class CategoryHelper
     /**
      * Const allowed languages
      */
-    const CATEGORY_HEALTH    = 'health';
+    const CATEGORY_HEALTH = 'health';
     const CATEGORY_EDUCATION = 'education';
-    const CATEGORY_CULTURE   = 'culture';
+    const CATEGORY_CULTURE = 'culture';
+    const CATEGORY_HYPE = 'hype';
 
     /**
      * @return array
      */
-    public static function getCategories() {
+    public static function getCategories()
+    {
         return [
-            self::CATEGORY_HEALTH    => 'Здоров\'я',
-            self::CATEGORY_EDUCATION  => 'Освіта',
-            self::CATEGORY_CULTURE    => 'Культура',
+            self::CATEGORY_HEALTH => 'Здоров\'я',
+            self::CATEGORY_EDUCATION => 'Освіта',
+            self::CATEGORY_CULTURE => 'Культура',
+            self::CATEGORY_HYPE => 'Освітній хайп',
         ];
     }
 }

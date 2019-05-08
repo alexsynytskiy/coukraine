@@ -175,6 +175,33 @@ class SiteController extends Controller
         ]);
     }
 
+    public function actionHype()
+    {
+        \Yii::$app->seo->setTitle('Освітній хайп');
+        \Yii::$app->seo->setDescription('Фундація З країни в Україну - ми робимо країну краще');
+        \Yii::$app->seo->setKeywords('фундація, україна');
+
+        $news = NewsHelper::prepareNews(
+            '',
+            [CategoryHelper::CATEGORY_HYPE]
+        );
+        $hasToLoadMore = false;
+        $lastItemId = 0;
+
+        if (count($news) > News::ITEMS_PER_PAGE) {
+            $hasToLoadMore = true;
+
+            array_pop($news);
+            $lastItemId = $news[count($news) - 1]->id;
+        }
+
+        return $this->render('hype', [
+            'news' => $news,
+            'hasToLoadMore' => $hasToLoadMore,
+            'lastItemId' => $lastItemId,
+        ]);
+    }
+
     public function actionTeam()
     {
         \Yii::$app->seo->setTitle('Культура');
